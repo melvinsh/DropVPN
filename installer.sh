@@ -18,8 +18,6 @@ newclient () {
 }
 
 # Try to get our IP from the system and fallback to the Internet.
-# I do this to make the script compatible with NATed servers (lowendspirit.com)
-# and to avoid getting an IPv6.
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 if [[ "$IP" = "" ]]; then
     IP=$(wget -qO- ipv4.icanhazip.com)
@@ -82,7 +80,7 @@ grep -v '#' /etc/resolv.conf | grep 'nameserver' | grep -E -o '[0-9]{1,3}\.[0-9]
 done
 
 echo "keepalive 10 120
-cipher AES-128-CBC
+cipher AES-256-CBC
 comp-lzo
 user nobody
 group nogroup
@@ -106,9 +104,6 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to $IP
 sed -i "1 a\iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to $IP" /etc/rc.local
 
 if iptables -L -n | grep -qE 'REJECT|DROP'; then
-  # If iptables has at least one REJECT rule, we asume this is needed.
-  # Not the best approach but I can't think of other and this shouldn't
-  # cause problems.
   iptables -I INPUT -p udp --dport $PORT -j ACCEPT
   iptables -I FORWARD -s 10.8.0.0/24 -j ACCEPT
   iptables -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
@@ -132,7 +127,7 @@ nobind
 persist-key
 persist-tun
 remote-cert-tls server
-cipher AES-128-CBC
+cipher AES-256-CBC
 comp-lzo
 setenv opt block-outside-dns
 key-direction 1
