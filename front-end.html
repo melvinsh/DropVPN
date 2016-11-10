@@ -1,0 +1,51 @@
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/components/form.min.css"></link>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/components/form.js"></script>
+
+<style>
+  body{background:#eee;text-align:center;}
+  header {margin-top: 100px; padding-bottom: 100px;}
+  h1 {font-family: 'Lato', sans-serif; font-size: 70px;}
+  div.container { margin-top:160px;}
+  div.segment {background:#f7f7f7;}
+</style>
+
+<div class="ui main container">
+  <div class="ui raised segments">
+    <div class="ui padded segment">
+    <h1>I want a VPN in</h1>
+    <form class="ui form">
+      <select class="ui dropdown" onchange="$('div.token').show();">
+        <option>Canada</option>
+        <option>Germany</option>
+        <option>India</option>
+        <option>Singapore</option>
+        <option>The Netherlands</option>
+        <option>United Kingdom</option>
+        <option>United States</option>
+      </select>
+    </div>
+    <div class="ui token segment" style="display:none;">
+      <h4 class="ui header">Create a <a target="_blank" href="https://cloud.digitalocean.com/settings/api/tokens/new">DigitalOcean token</a> and paste it in the field below.</h4>
+      <div class="ui form">
+      <input type="text" placeholder="Enter your token here" onpaste="$('div.start').show();" pattern="(\w|\d){64}" title="Enter a valid API key"></input>
+      </input>
+      </div>
+    </div>
+    <div class="ui start segment" style="display:none;">
+      <input type="submit" class="ui primary button" value="Build VPN">
+
+      </input>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+$('select.dropdown').dropdown();
+</script>
