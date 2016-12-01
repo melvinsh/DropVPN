@@ -32,6 +32,9 @@ GEM
     method_source (0.8.2)
     minitest (5.9.1)
     multipart-post (2.0.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.2.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -54,6 +57,8 @@ PLATFORMS
 
 DEPENDENCIES
   droplet_kit
+  net-scp
+  net-ssh
   pry
   sshkey
 
